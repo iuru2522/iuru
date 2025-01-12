@@ -1,54 +1,17 @@
 {
-	"name": "iuru",
-	"version": "0.0.1",
-	"scripts": {
-		"dev": "vite dev",
-		"build": "vite build && npm run package",
-		"preview": "vite preview",
-		"package": "svelte-kit sync && svelte-package && publint",
-		"prepublishOnly": "npm run package",
-		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
-		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
-		"db:push": "drizzle-kit push",
-		"db:migrate": "drizzle-kit migrate",
-		"db:studio": "drizzle-kit studio"
-	},
-	"files": [
-		"dist",
-		"!dist/**/*.test.*",
-		"!dist/**/*.spec.*"
-	],
-	"sideEffects": [
-		"**/*.css"
-	],
-	"svelte": "./dist/index.js",
-	"types": "./dist/index.d.ts",
-	"type": "module",
-	"exports": {
-		".": {
-			"types": "./dist/index.d.ts",
-			"svelte": "./dist/index.js"
-		}
-	},
-	"peerDependencies": {
-		"svelte": "^5.17.3"
-	},
-	"devDependencies": {
-		"@sveltejs/adapter-cloudflare": "^5.0.0",
-		"@sveltejs/kit": "^2.15.2",
-		"@sveltejs/package": "^2.0.0",
-		"@sveltejs/vite-plugin-svelte": "^5.0.3",
-		"drizzle-kit": "^0.30.1",
-		"modern-normalize": "^3.0.1",
-		"publint": "^0.3.0",
-		"svelte": "^5.17.3",
-		"svelte-check": "^4.1.3",
-		"typescript": "^5.7.3",
-		"vite": "^6.0.7",
-		"wrangler": "^3.101.0"
-	},
-	"dependencies": {
-		"@neondatabase/serverless": "^0.10.4",
-		"drizzle-orm": "^0.38.3"
-	}
+  "name": "nuxt-app",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "nuxt": "^3.15.1",
+    "vue": "latest",
+    "vue-router": "latest"
+  }
 }
