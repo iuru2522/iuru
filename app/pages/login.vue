@@ -4,7 +4,7 @@ const config = useRuntimeConfig()
 const handleTwitchLogin = () => {
   const twitchAuthUrl = new URL('https://id.twitch.tv/oauth2/authorize')
   twitchAuthUrl.searchParams.append('client_id', config.public.TWITCH_CLIENT_ID)
-  twitchAuthUrl.searchParams.append('redirect_uri', encodeURI(config.public.TWITCH_REDIRECT_URI.trim()))
+  twitchAuthUrl.searchParams.append('redirect_uri', config.public.TWITCH_REDIRECT_URI)
   twitchAuthUrl.searchParams.append('response_type', 'code')
   twitchAuthUrl.searchParams.append('scope', 'user:read:email')
 
