@@ -2,35 +2,38 @@
 const config = useRuntimeConfig()
 
 const handleTwitchLogin = () => {
-  // Debug log to check if we're getting the values
-  console.log('Config values:', {
+  // Show values on the page instead of console
+  const values = {
     clientId: config.public.TWITCH_CLIENT_ID,
     redirectUri: config.public.TWITCH_REDIRECT_URI
-  })
+  }
+
+  if (!values.clientId || !values.redirectUri) {
+    alert('Missing environment variables. Check Cloudflare configuration.')
+    return
+  }
 
   const twitchAuthUrl = new URL('https://id.twitch.tv/oauth2/authorize')
-  
-  // Add null checks and default values
   const params = {
-    client_id: config.public.TWITCH_CLIENT_ID || '',
-    redirect_uri: config.public.TWITCH_REDIRECT_URI || '',
+    client_id: values.clientId,
+    redirect_uri: values.redirectUri,
     response_type: 'code',
     scope: 'user:read:email'
   }
 
-  // Log the final URL for debugging
-  console.log('Auth URL params:', params)
-
-  Object.entries(params).forEach(([key, value]) => {
-    twitchAuthUrl.searchParams.append(key, value)
-  })
-
-  window.location.href = twitchAuthUrl.toString()
+  window.location.href = twitchAuthUrl.toString() + '?' + new URLSearchParams(params)
 }
 </script>
 
 <template>
   <div class="login-container">
+    <div v-if="!config.public.TWITCH_CLIENT_ID || !config.public.TWITCH_REDIRECT_URI" class="error">
+      Environment variables missing:
+      <pre>
+        TWITCH_CLIENT_ID: {{ config.public.TWITCH_CLIENT_ID || 'missing' }}
+        TWITCH_REDIRECT_URI: {{ config.public.TWITCH_REDIRECT_URI || 'missing' }}
+      </pre>
+    </div>
     <button @click="handleTwitchLogin" class="twitch-button">
       Login with Twitch
     </button>
@@ -57,5 +60,15 @@ const handleTwitchLogin = () => {
 
 .twitch-button:hover {
   background-color: #7d3cdb;
+}
+
+.error {
+  color: red;
+  margin-bottom: 20px;
+}
+pre {
+  background: #f5f5f5;
+  padding: 10px;
+  border-radius: 4px;
 }
 </style>
