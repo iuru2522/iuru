@@ -8,7 +8,7 @@ const router = useRouter()
 const handleLogout = () => {
   localStorage.removeItem('twitch_token')
   localStorage.removeItem('user')
-  router.push('/login')
+  router.push('/')
 }
 </script>
 
