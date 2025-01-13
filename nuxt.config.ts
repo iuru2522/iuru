@@ -6,10 +6,10 @@ export default defineNuxtConfig({
     compatibilityVersion: 4,
   },
   runtimeConfig: {
-    TWITCH_CLIENT_SECRET: process.env.TWITCH_CLIENT_SECRET,
+    TWITCH_CLIENT_SECRET: process.env.NUXT_TWITCH_CLIENT_SECRET,
     public: {
-      TWITCH_CLIENT_ID: process.env.TWITCH_CLIENT_ID,
-      TWITCH_REDIRECT_URI: process.env.TWITCH_REDIRECT_URI
+      TWITCH_CLIENT_ID: process.env.NUXT_PUBLIC_TWITCH_CLIENT_ID,
+      TWITCH_REDIRECT_URI: process.env.NUXT_PUBLIC_TWITCH_REDIRECT_URI
     }
   }
 })
