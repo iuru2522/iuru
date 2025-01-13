@@ -2,11 +2,28 @@
 const config = useRuntimeConfig()
 
 const handleTwitchLogin = () => {
+  // Debug log to check if we're getting the values
+  console.log('Config values:', {
+    clientId: config.public.TWITCH_CLIENT_ID,
+    redirectUri: config.public.TWITCH_REDIRECT_URI
+  })
+
   const twitchAuthUrl = new URL('https://id.twitch.tv/oauth2/authorize')
-  twitchAuthUrl.searchParams.append('client_id', config.public.TWITCH_CLIENT_ID)
-  twitchAuthUrl.searchParams.append('redirect_uri', config.public.TWITCH_REDIRECT_URI)
-  twitchAuthUrl.searchParams.append('response_type', 'code')
-  twitchAuthUrl.searchParams.append('scope', 'user:read:email')
+  
+  // Add null checks and default values
+  const params = {
+    client_id: config.public.TWITCH_CLIENT_ID || '',
+    redirect_uri: config.public.TWITCH_REDIRECT_URI || '',
+    response_type: 'code',
+    scope: 'user:read:email'
+  }
+
+  // Log the final URL for debugging
+  console.log('Auth URL params:', params)
+
+  Object.entries(params).forEach(([key, value]) => {
+    twitchAuthUrl.searchParams.append(key, value)
+  })
 
   window.location.href = twitchAuthUrl.toString()
 }
