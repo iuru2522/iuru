@@ -1,7 +1,7 @@
-<script setup>
+<script setup lang="ts">
 const route = useRoute()
 const router = useRouter()
-const error = ref(null)
+const error = ref<string | null>(null)
 
 onMounted(async () => {
   const { code } = route.query
@@ -18,9 +18,9 @@ onMounted(async () => {
         localStorage.setItem('user', JSON.stringify(response.user))
         router.push('/dashboard')
       }
-    } catch (err: any) {
+    } catch (err) {
       console.error('Login error:', err)
-      error.value = err.message || 'Authentication failed'
+      error.value = err instanceof Error ? err.message : 'Authentication failed'
       // Wait a bit before redirecting to show the error
       setTimeout(() => {
         router.push('/login')
