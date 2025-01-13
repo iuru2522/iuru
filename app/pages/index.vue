@@ -1,6 +1,7 @@
 <script setup>
 const route = useRoute()
 const router = useRouter()
+const error = ref(null)
 
 onMounted(async () => {
   const { code } = route.query
@@ -17,9 +18,13 @@ onMounted(async () => {
         localStorage.setItem('user', JSON.stringify(response.user))
         router.push('/dashboard')
       }
-    } catch (error) {
-      console.error('Login error:', error)
-      router.push('/login')
+    } catch (err: any) {
+      console.error('Login error:', err)
+      error.value = err.message || 'Authentication failed'
+      // Wait a bit before redirecting to show the error
+      setTimeout(() => {
+        router.push('/login')
+      }, 3000)
     }
   }
 })
@@ -27,7 +32,12 @@ onMounted(async () => {
 
 <template>
   <div v-if="route.query.code" class="loading">
-    Authenticating...
+    <div v-if="error" class="error">
+      {{ error }}
+    </div>
+    <div v-else>
+      Authenticating...
+    </div>
   </div>
   <div v-else>
     <h1>Welcome to the App</h1>
@@ -40,8 +50,14 @@ onMounted(async () => {
 <style scoped>
 .loading {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+}
+
+.error {
+  color: red;
+  margin-top: 1rem;
 }
 </style>
